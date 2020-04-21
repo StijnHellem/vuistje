@@ -1,0 +1,17 @@
+[build]
+  functions = "src/functions/"
+
+
+[dev]
+  command = "gatsby develop"
+  port = 3000
+
+[[redirects]]
+  from = "/post"
+  to = "/.netlify/functions/post"
+  status = 200
+
+[[redirects]]
+  from = "/vuistj/*"
+  to = "/show?id=:splat"
+  status = 302
