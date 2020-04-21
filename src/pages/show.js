@@ -1,40 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react"
 
-import Layout from "../components/layout";
-import SEO from "../components/seo";
-import Vuist from "../components/vuist";
-import Content from "../components/content";
+import Layout from "../components/layout"
+import Content from "../components/content"
+import ShareUrl from "../components/shareUrl"
+import Vuist from "../components/vuist"
+import SEO from "../components/seo"
 
-import { StringParam, useQueryParam} from "use-query-params";
+import { useQueryParam, StringParam } from "use-query-params"
 
-const ShowPage = () => {
-    const [vuistje, setVuistje] = useState(null); 
+import style from "./show.module.css"
 
-    const [id] = useQueryParam("id", StringParam);
+const ShowPage = ({ location }) => {
+  const [vuistje, setVuistje] = useState(null)
+  const [id] = useQueryParam("id", StringParam)
 
-    //const vuistje = {from: "from", to: "to", message: "message" }
+  const domain = location.origin ? location.origin : ""
 
-    useEffect(() => {
-        const getData = async () => {
-          const r = await fetch(`/.netlify/functions/show?id=${id}`);
-          const data = await r.json();
-          setVuistje(data);
-        }
-        getData()
-      }, [id])
+  useEffect(() => {
+    const getData = async () => {
+      const r = await fetch(`/.netlify/functions/show?id=${id}`)
+      const data = await r.json()
+      setVuistje(data)
+    }
+    getData()
+  }, [id])
 
-    return (
-<Layout>
-    <SEO title="Create"/>
-    {vuistje ? (
-   <> 
-   <Vuist/>
-   <Content {...vuistje} /> 
-   </>
-    ): (
-        <p>Vuistje aan het ballen ...</p>
-    )}
+  return (
+    <Layout>
+      <SEO title="Deel dit vuistje" />
+      {vuistje ? (
+        <>
+          <Vuist />
+          <ShareUrl value={`${domain}/vuistje/${id}`} />
+          <Content {...vuistje} />
+        </>
+      ) : (
+        <p className={style.loading}>Vuistje aan het ballen...</p>
+      )}
+    </Layout>
+  )
+}
 
-</Layout>
-)}
-export default ShowPage;
+export default ShowPage

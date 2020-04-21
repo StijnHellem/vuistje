@@ -4,18 +4,12 @@ import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import style from "./index.module.css"
+import Vuist from "../components/vuist"
 
 const IndexPage = ({ data }) => (
   <Layout>
     <SEO title="Home" />
-
-    <ul>
-      {data.allContentfulVuist.edges.map(({ node }) => (
-        <li>
-          <Link to={`vuistje/${node.id}`}> {node.id}</Link>
-        </li>
-      ))}
-    </ul>
+    <Vuist />
     <Link to="/create" className={style.button}>
       Geef een vuistje
     </Link>
