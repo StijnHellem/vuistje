@@ -12,6 +12,6 @@
   status = 200
 
 [[redirects]]
-  from = "/vuistj/*"
+  from = "/vuistje/*"
   to = "/show?id=:splat"
   status = 302
